@@ -14,36 +14,36 @@ use pocketmine\player\Player;
 
 abstract class BaseTagMenu{
 
-    public function __construct(
-        private Session $session,
-        private Tag $tag
-    ) {
-    }
+	public function __construct(
+		private Session $session,
+		private Tag $tag
+	) {
+	}
 
-    abstract protected function getForm() : BaseForm;
-    /**
-     * @return MenuOption[]|CustomFormElement[]
-     */
-    abstract protected function getElements() : array;
-    /**
-     * @param int|CustomFormResponse $result
-     */
-    abstract protected function onResponse($result) : void;
+	abstract protected function getForm() : BaseForm;
+	/**
+	 * @return MenuOption[]|CustomFormElement[]
+	 */
+	abstract protected function getElements() : array;
+	/**
+	 * @param int|CustomFormResponse $result
+	 */
+	abstract protected function onResponse($result) : void;
 
-    public function isViewer(Player $player) : bool{
-        return $player->getUniqueId()->equals($this->getSession()->getPlayer()->getUniqueId());
-    }
+	public function isViewer(Player $player) : bool{
+		return $player->getUniqueId()->equals($this->getSession()->getPlayer()->getUniqueId());
+	}
 
-    public function send() : void{
-        $this->getSession()->getPlayer()->sendForm($this->getForm());
-    }
+	public function send() : void{
+		$this->getSession()->getPlayer()->sendForm($this->getForm());
+	}
 
-    public function getSession() : Session{
-        return $this->session;
-    }
+	public function getSession() : Session{
+		return $this->session;
+	}
 
-    public function getTag() : Tag{
-        return $this->tag;
-    }
+	public function getTag() : Tag{
+		return $this->tag;
+	}
 
 }

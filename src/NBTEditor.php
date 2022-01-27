@@ -8,14 +8,20 @@ use Mcbeany\NBTEditor\menus\ContainerTagMenu;
 use Mcbeany\NBTEditor\menus\ImmutableTagMenu;
 use Mcbeany\NBTEditor\sessions\Session;
 use Mcbeany\NBTEditor\sessions\SessionManager;
-use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\Tag;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
+use function array_search;
+use function preg_replace;
+use function sprintf;
+use function strlen;
+use function strtolower;
+use function substr;
 
 class NBTEditor extends PluginBase{
 	const NBTEDITOR = "NBTEditor";
@@ -68,11 +74,11 @@ class NBTEditor extends PluginBase{
 		(new ImmutableTagMenu($session, $tag))->send();
 	}
 
-	/** 
+	/**
 	 * @return string E.g. "Compound"
 	 */
 	public static function getTagName(int $tagType) : string{
-		$constant = array_search($tagType, self::$constants);
+		$constant = array_search($tagType, self::$constants, true);
 		if(!$constant){
 			throw new \InvalidArgumentException("Invalid tag type $tagType");
 		}
@@ -80,8 +86,6 @@ class NBTEditor extends PluginBase{
 	}
 
 	/**
-	 * @return string
-	 * 
 	 * @see "https://github.com/tryashtar/nbt-studio/blob/master/NbtStudio/Resources/wiki"
 	 * @see https://stackoverflow.com/a/19533226
 	 */
