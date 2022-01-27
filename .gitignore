@@ -1,0 +1,9 @@
+# Ignore composer, phpcsfixer and phpstan
+vendor/
+.php-cs-fixer.cache
+.php-cs-fixer.php
+composer.json
+composer.lock
+phpstan.neon.dist
+# Tests
+tests/

@@ -1,0 +1,17 @@
+---
+name: NBTEditor
+version: 1.0.0
+main: Mcbeany\NBTEditor\NBTEditor
+api: 4.0.0
+src-namespace-prefix: Mcbeany\NBTEditor
+
+commands:
+  nbteditor:
+    description: Open NBTEditor Menu
+    permission: nbteditor.command
+    aliases: ["nbte"]
+
+permissions:
+  nbteditor.command:
+    default: op
+...
