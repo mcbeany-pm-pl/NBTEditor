@@ -48,7 +48,7 @@ class EditTagMenu extends BaseTagMenu{
 	protected function getElements() : array{
 		$parent = $this->getSession()->getParentTag();
 		$arrMsg = $this->getTag() instanceof IntArrayTag ?
-			"Split array elements by spaces \" \"" : "";
+			"You can enter a comma-separated list of values" : "";
 		if($parent === null){
 			return [];
 		}
@@ -79,7 +79,7 @@ class EditTagMenu extends BaseTagMenu{
 		$value = match($this->getTag()->getType()){
 			NBT::TAG_Byte, NBT::TAG_Int, NBT::TAG_Long, NBT::TAG_Short => (int) $input,
 			NBT::TAG_Double, NBT::TAG_Float => (float) $input,
-			NBT::TAG_IntArray => array_map(fn (string $v) : int => (int) $v, explode(" ", $input)),
+			NBT::TAG_IntArray => array_map(fn (string $v) : int => (int) trim($v), explode(",", $input)),
 			default => $input
 		};
 		$parent = $this->getSession()->getParentTag();
