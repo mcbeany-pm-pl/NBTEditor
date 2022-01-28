@@ -80,6 +80,7 @@ class EditTagMenu extends BaseTagMenu{
 			NBT::TAG_Byte, NBT::TAG_Int, NBT::TAG_Long, NBT::TAG_Short => (int) $input,
 			NBT::TAG_Double, NBT::TAG_Float => (float) $input,
 			NBT::TAG_IntArray => array_map(fn (string $v) : int => (int) trim($v), explode(",", $input)),
+			NBT::TAG_ByteArray => is_numeric($input) ? (int) $input : 0,
 			default => $input
 		};
 		$parent = $this->getSession()->getParentTag();
