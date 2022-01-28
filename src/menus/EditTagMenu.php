@@ -13,7 +13,10 @@ use dktapps\pmforms\element\Label;
 use Mcbeany\NBTEditor\NBTEditor;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntArrayTag;
 use pocketmine\player\Player;
+use function array_map;
+use function explode;
 use function sprintf;
 use function strval;
 
@@ -44,6 +47,8 @@ class EditTagMenu extends BaseTagMenu{
 	 */
 	protected function getElements() : array{
 		$parent = $this->getSession()->getParentTag();
+		$arrMsg = $this->getTag() instanceof IntArrayTag ?
+			"Split array elements by spaces \" \"" : "";
 		if($parent === null){
 			return [];
 		}
@@ -59,7 +64,7 @@ class EditTagMenu extends BaseTagMenu{
 			),
 			new Input(
 				"value",
-				"Enter new tag's value:",
+				sprintf("Enter new tag's value:\n%s", $arrMsg),
 				"",
 				strval($this->getTag()->getValue())
 			)
@@ -74,8 +79,8 @@ class EditTagMenu extends BaseTagMenu{
 		$value = match($this->getTag()->getType()){
 			NBT::TAG_Byte, NBT::TAG_Int, NBT::TAG_Long, NBT::TAG_Short => (int) $input,
 			NBT::TAG_Double, NBT::TAG_Float => (float) $input,
+			NBT::TAG_IntArray => array_map(fn (string $v) : int => (int) $v, explode(" ", $input)),
 			default => $input
-			// TODO: Byte array & int array
 		};
 		$parent = $this->getSession()->getParentTag();
 		$method = "set";

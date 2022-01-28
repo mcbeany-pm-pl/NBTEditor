@@ -11,19 +11,19 @@ use pocketmine\player\Player;
 
 final class SessionManager implements Listener{
 
-	/** @var array<int, Session> $sessions */
+	/** @var array<string, Session> $sessions */
 	private array $sessions = [];
 
 	private function createSession(Player $player) : void{
-		$this->sessions[$player->getId()] = new Session($player);
+		$this->sessions[$player->getName()] = new Session($player);
 	}
 
 	public function getSession(Player $player) : Session{
-		return $this->sessions[$player->getId()];
+		return $this->sessions[$player->getName()];
 	}
 
 	private function destroySession(Player $player) : void{
-		unset($this->sessions[$player->getId()]);
+		unset($this->sessions[$player->getName()]);
 	}
 
 	public function onJoin(PlayerJoinEvent $playerJoinEvent) : void{
