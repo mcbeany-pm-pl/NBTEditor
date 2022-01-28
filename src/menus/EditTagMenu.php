@@ -17,7 +17,7 @@ use pocketmine\player\Player;
 use function sprintf;
 use function strval;
 
-class ImmutableTagMenu extends BaseTagMenu{
+class EditTagMenu extends BaseTagMenu{
 
 	protected function getForm() : BaseForm{
 		return new CustomForm(

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mcbeany\NBTEditor;
 
 use Mcbeany\NBTEditor\menus\ContainerTagMenu;
-use Mcbeany\NBTEditor\menus\ImmutableTagMenu;
+use Mcbeany\NBTEditor\menus\EditTagMenu;
 use Mcbeany\NBTEditor\sessions\Session;
 use Mcbeany\NBTEditor\sessions\SessionManager;
 use pocketmine\command\Command;
@@ -71,7 +71,7 @@ class NBTEditor extends PluginBase{
 			(new ContainerTagMenu($session, $tag))->send();
 			return;
 		}
-		(new ImmutableTagMenu($session, $tag))->send();
+		(new EditTagMenu($session, $tag))->send();
 	}
 
 	/**
