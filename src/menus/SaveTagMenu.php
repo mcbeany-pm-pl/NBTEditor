@@ -28,7 +28,7 @@ class SaveTagMenu extends BaseTagMenu{
 				if(!$this->isViewer($player)){
 					return;
 				}
-				$this->getSession()->openPrevTag();
+				$this->getSession()->reload();
 			}
 		);
 	}
