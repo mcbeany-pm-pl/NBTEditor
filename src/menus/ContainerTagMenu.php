@@ -9,6 +9,7 @@ use dktapps\pmforms\FormIcon;
 use dktapps\pmforms\MenuForm;
 use dktapps\pmforms\MenuOption;
 use Mcbeany\NBTEditor\NBTEditor;
+use Mcbeany\NBTEditor\sessions\Mode;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\Tag;
@@ -18,6 +19,7 @@ use function array_values;
 use function count;
 use function sprintf;
 use function strval;
+use function ucfirst;
 
 class ContainerTagMenu extends BaseTagMenu{
 
@@ -47,7 +49,12 @@ class ContainerTagMenu extends BaseTagMenu{
 	protected function getElements() : array{
 		$buttons = [
 			new MenuOption($this->getSession()->hasPrevTags() ? "Back" : "Exit"),
-			new MenuOption("Save")
+			new MenuOption("Save"),
+			new MenuOption("Add tag"),
+			new MenuOption(sprintf(
+				"Switch to %s mode",
+				ucfirst($this->getSession()->otherMode()->name())),
+			)
 		];
 		foreach($this->getTag() as $key => $tagValue){
 			$value = $tagValue->getValue();
@@ -97,9 +104,26 @@ class ContainerTagMenu extends BaseTagMenu{
 				}
 				(new SaveTagMenu($this->getSession(), $currTag))->send();
 				break;
-			default:
+			case 2:
 				$this->getSession()->insertPrevTag($this->getTag());
+				(new AddTagMenu($this->getSession(), $this->getTag()))->send();
+				break;
+			case 3:
+				$this->getSession()->switchMode();
+				NBTEditor::openEditor($this->getSession(), $this->getTag());
+				break;
+			default:
 				$response -= count($this->getElements()) - $this->getTag()->count();
+				if($this->getSession()->getMode()->equals(Mode::REMOVE())){
+					if($this->getTag() instanceof ListTag){
+						$this->getTag()->remove($response);
+					}else{
+						$this->getTag()->removeTag(array_keys($this->getTag()->getValue())[$response]);
+					}
+					NBTEditor::openEditor($this->getSession(), $this->getTag());
+					return;
+				}
+				$this->getSession()->insertPrevTag($this->getTag());
 				$selectedTag = array_values($this->getTag()->getValue())[$response];
 				if(!self::isContainerTag($selectedTag)){
 					$this->getSession()->setParentTag($this->getTag());

@@ -29,7 +29,7 @@ class NBTEditor extends PluginBase{
 	private SessionManager $sessionManager;
 	/** @var array<string, mixed> $constants */
 	// Should be array<string, int> but PHPStan :((
-	private static array $constants;
+	public static array $constants;
 
 	protected function onEnable() : void{
 		$this->getServer()->getPluginManager()->registerEvents(

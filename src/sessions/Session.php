@@ -14,6 +14,7 @@ class Session{
 
 	const NONE = -1;
 
+	private Mode $mode;
 	private int $heldIndex = self::NONE;
 	private ?CompoundTag $currTag = null;
 	private CompoundTag|ListTag|null $parentTag;
@@ -24,6 +25,22 @@ class Session{
 	public function __construct(
 		private Player $player
 	) {
+		$this->mode = Mode::EDIT();
+	}
+
+	public function getMode() : Mode{
+		return $this->mode;
+	}
+
+	public function otherMode() : Mode{
+		if($this->mode->equals(Mode::EDIT())){
+			return Mode::REMOVE();
+		}
+		return Mode::EDIT();
+	}
+
+	public function switchMode() : void{
+		$this->mode = $this->otherMode();
 	}
 
 	public function getHeldIndex() : int{
