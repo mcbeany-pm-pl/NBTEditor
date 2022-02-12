@@ -6,8 +6,6 @@ Make sure you have [pmforms](https://poggit.pmmp.io/ci/dktapps-pm-pl/pmforms) in
 ## Screenshots
 ![](https://i.imgur.com/1eJr22H.png) ![](https://i.imgur.com/mEc7Cuh.png) ![](https://i.imgur.com/sXV7IN5.png) ![](https://i.imgur.com/6sLJctr.png) ![](https://i.imgur.com/mvl8Kbg.png) ![](https://i.imgur.com/4u3pkr4.png)
 ## TODO Features:
- - [ ] Undo option
- - [ ] Copy to Clipboard & Merge Tag
- - [x] Insert new Tag
- - [x] Remove Tag
- - [ ] Correct my English + Message (Language)
+ - Undo option
+ - Copy to Clipboard & Merge Tag
+ - Correct my English + Message (Language)
