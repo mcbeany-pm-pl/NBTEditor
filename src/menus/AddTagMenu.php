@@ -69,12 +69,12 @@ class AddTagMenu extends BaseTagMenu{
 				$tags
 			),
 			new Input(
-				"value",
-				"Enter tag value. If your tag is an int array, you can enter a comma-separated list of values, otherwise if your tag is a compound or list, you can leave this blank"
-			),
-			new Input(
 				"key",
 				"Enter tag key. If your tag is a list, you can leave this blank"
+			),
+			new Input(
+				"value",
+				"Enter tag value. If your tag is an int array, you can enter a comma-separated list of values, otherwise if your tag is a compound or list, you can leave this blank"
 			)
 		];
 	}
