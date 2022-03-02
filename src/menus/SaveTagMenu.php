@@ -9,6 +9,7 @@ use dktapps\pmforms\MenuForm;
 use dktapps\pmforms\MenuOption;
 use Mcbeany\NBTEditor\NBTEditor;
 use pocketmine\item\Item;
+use pocketmine\nbt\NbtException;
 use pocketmine\player\Player;
 
 class SaveTagMenu extends BaseTagMenu{
@@ -48,27 +49,32 @@ class SaveTagMenu extends BaseTagMenu{
 	 * @param int $result
 	 */
 	protected function onResponse($result) : void{
-		$currTag = $this->getSession()->getCurrTag();
-		if($currTag === null){
-			$this->getSession()->reload();
-			return;
-		}
-		$item = Item::nbtDeserialize($currTag);
-		switch($result){
-			case 0:
-				$this->getSession()->getPlayer()->getInventory()->setHeldItemIndex($this->getSession()->getHeldIndex());
-				$this->getSession()->getPlayer()->getInventory()->setItemInHand($item);
+		$player = $this->getSession()->getPlayer();
+		try{
+			$currTag = $this->getSession()->getCurrTag();
+			if($currTag === null){
 				$this->getSession()->reload();
-				break;
-			case 1:
-				if(!empty($notFit = $this->getSession()->getPlayer()->getInventory()->addItem($item))){
-					$this->getSession()->getPlayer()->dropItem(...$notFit);
-				}
-				$this->getSession()->reload();
-				break;
-			case 2:
-				$this->getSession()->openPrevTag();
-				break;
+				return;
+			}
+			$item = Item::nbtDeserialize($currTag);
+			switch($result){
+				case 0:
+					$player->getInventory()->setHeldItemIndex($this->getSession()->getHeldIndex());
+					$player->getInventory()->setItemInHand($item);
+					$this->getSession()->reload();
+					break;
+				case 1:
+					if(!empty($notFit = $player->getInventory()->addItem($item))){
+						$player->dropItem(...$notFit);
+					}
+					$this->getSession()->reload();
+					break;
+				case 2:
+					$this->getSession()->openPrevTag();
+					break;
+			}
+		}catch(NbtException $e){
+			$player->sendMessage($e->getMessage());
 		}
 	}
 
