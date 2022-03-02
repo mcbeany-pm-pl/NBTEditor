@@ -136,7 +136,7 @@ class AddTagMenu extends BaseTagMenu{
 			return;
 		}
 		$tagType = $this->getTag()->getTagType();
-		if(!is_numeric($key) or ($tagType !== NBT::TAG_End and $tagType !== $tag->getType())){
+		if((!empty($key) && !is_numeric($key)) or ($tagType !== NBT::TAG_End and $tagType !== $tag->getType())){
 			$this->getSession()->openPrevTag();
 			return;
 		}
