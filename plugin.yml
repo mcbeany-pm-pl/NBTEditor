@@ -1,6 +1,6 @@
 ---
 name: NBTEditor
-version: 1.0.0
+version: 1.0.1
 main: Mcbeany\NBTEditor\NBTEditor
 api: 4.0.0
 src-namespace-prefix: Mcbeany\NBTEditor
