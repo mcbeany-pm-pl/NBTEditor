@@ -1,9 +1,8 @@
 ---
 name: NBTEditor
-version: 1.0.1
+version: 1.0.2
 main: Mcbeany\NBTEditor\NBTEditor
 api: 4.0.0
-src-namespace-prefix: Mcbeany\NBTEditor
 
 commands:
   nbteditor:
